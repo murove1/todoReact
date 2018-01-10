@@ -1,0 +1,7 @@
+.stats {
+  display: flex;
+}
+
+.stats-item {
+  padding: 5px;
+}
