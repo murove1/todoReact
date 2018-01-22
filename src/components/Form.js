@@ -9,37 +9,43 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      title: ''
+      text: ''
     };
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    let title = this.state.title;
 
-    if (title) {
-      this.props.onAdd(title);
-      this.setState({ title: '' });
+    let text = this.state.text;
+    const { onAdd } = this.props;
+
+    if (text) {
+      onAdd(text);
+      this.setState({ text: '' });
     }
   };
 
   handleChange = event => {
-    let title = event.target.value;
+    let text = event.target.value;
 
-    this.setState({ title });
+    this.setState({ text });
   };
 
   render() {
-    const { title } = this.state;
+    const { text } = this.state;
+    const disabled = !this.state.text;
+
     return (
       <form className="todo-form" onSubmit={this.handleSubmit}>
         <input
           type="text"
-          value={title}
+          value={text}
           placeholder="Enter text for todo."
           onChange={this.handleChange}
         />
-        <Button type="submit">Add</Button>
+        <Button type="submit" disabled={disabled}>
+          Add
+        </Button>
       </form>
     );
   }

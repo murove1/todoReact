@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Todo from './Todo';
 
-const TodoList = props => {
-  const { todos, onStatusChange, onDelete, onEdit } = props;
+const List = props => {
+  const { todos, onEdit, onComplete, onDelete } = props;
 
   return (
     <section className="todo-list">
@@ -12,28 +12,28 @@ const TodoList = props => {
         <Todo
           key={todo.id}
           id={todo.id}
-          title={todo.title}
+          text={todo.text}
           completed={todo.completed}
-          onStatusChange={onStatusChange}
-          onDelete={onDelete}
           onEdit={onEdit}
+          onComplete={onComplete}
+          onDelete={onDelete}
         />
       ))}
     </section>
   );
 };
 
-TodoList.propTypes = {
+List.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired
     })
   ).isRequired,
-  onStatusChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired
+  onEdit: PropTypes.func.isRequired,
+  onComplete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
-export default TodoList;
+export default List;

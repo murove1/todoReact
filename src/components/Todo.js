@@ -14,9 +14,13 @@ class Todo extends Component {
     };
   }
 
-  handleChange = () => {
-    const { id, onStatusChange } = this.props;
-    onStatusChange(id);
+  handleEdit = () => {
+    this.setState({ editing: true });
+  };
+
+  handleComplete = () => {
+    const { id, onComplete } = this.props;
+    onComplete(id);
   };
 
   handleDelete = () => {
@@ -24,35 +28,34 @@ class Todo extends Component {
     onDelete(id);
   };
 
-  handleEdit = () => {
-    this.setState({ editing: true });
-  };
-
   handleSubmit = event => {
     const { onEdit, id } = this.props;
-    let title = this.textInput.value;
+    let text = this.textInput.value;
     event.preventDefault();
 
-    onEdit(id, title);
+    if (text) {
+      onEdit(id, text);
+    }
+
     this.setState({ editing: false });
   };
 
   render() {
-    const { title, completed } = this.props;
+    const { text, completed } = this.props;
     const { editing } = this.state;
     return editing ? (
       <form className="todo-edit-form" onSubmit={this.handleSubmit}>
         <input
           type="text"
           ref={input => (this.textInput = input)}
-          defaultValue={this.props.title}
+          defaultValue={this.props.text}
         />
         <Button className="save icon" icon="save" type="submit" />
       </form>
     ) : (
       <div className={`todo${completed ? ' completed' : ''}`}>
-        <Checkbox checked={completed} onChange={this.handleChange} />
-        <span className="todo-title">{title}</span>
+        <Checkbox checked={completed} onChange={this.handleComplete} />
+        <span className="todo-title">{text}</span>
         <Button className="edit icon" icon="edit" onClick={this.handleEdit} />
         <Button
           className="delete icon"
@@ -65,9 +68,9 @@ class Todo extends Component {
 }
 
 Todo.propTypes = {
-  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,
-  onStatusChange: PropTypes.func.isRequired,
+  onComplete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired
 };

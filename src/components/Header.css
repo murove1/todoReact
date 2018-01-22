@@ -19,6 +19,7 @@
 
 .header-title {
   font-size: 1.5em;
+  user-select: none;
 }
 
 @keyframes header-logo-spin {
